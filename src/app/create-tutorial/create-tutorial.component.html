@@ -1,0 +1,38 @@
+<!-- modal -->
+<div *ngIf="isModalOpen" class="fixed inset-0 flex items-center justify-center z-50">
+  <div class="absolute inset-0 bg-black opacity-40"></div>
+
+  <div class="relative bg-white rounded-lg shadow-lg w-11/12 max-w-md p-6 z-60">
+    <h3 class="text-xl font-semibold mb-3">{{ mode === 'create' ? 'Create Tutorial' : 'Edit Tutorial' }}</h3>
+
+    <div>
+      <label class="block text-sm text-gray-600">Title</label>
+      <input [(ngModel)]="newTutorial.title" class="w-full px-3 py-2 border rounded mb-3" />
+    </div>
+
+    <div>
+      <label class="block text-sm text-gray-600">Description</label>
+      <textarea [(ngModel)]="newTutorial.description" rows="4" class="w-full px-3 py-2 border rounded mb-3"></textarea>
+    </div>
+
+    <div>
+      <label class="block text-sm text-gray-600">Category</label>
+      <input [(ngModel)]="newTutorial.category" class="w-full px-3 py-2 border rounded mb-3" />
+    </div>
+
+    <div class="flex items-center gap-2 mb-3">
+      <input id="published" type="checkbox" [(ngModel)]="newTutorial.published" />
+      <label for="published" class="text-sm text-gray-600">Published</label>
+    </div>
+
+    <div *ngIf="error" class="text-red-500 text-sm mb-2">{{ error }}</div>
+
+    <div class="flex justify-end gap-2">
+      <button (click)="closeModal()" class="px-4 py-2 border rounded">Cancel</button>
+      <button (click)="save()" [disabled]="saving"
+              class="px-4 py-2 bg-blue-600 text-white rounded">
+        {{ saving ? 'Saving...' : (mode === 'create' ? 'Save' : 'Update') }}
+      </button>
+    </div>
+  </div>
+</div>

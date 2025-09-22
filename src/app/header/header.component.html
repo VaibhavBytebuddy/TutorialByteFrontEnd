@@ -1,0 +1,24 @@
+<nav class="  flex items-center justify-between p-5 md:py-4">
+
+  <div class="flex items-center gap-2 text-gray-800 font-serif text-2xl font-bold">
+    <img class="h-16 md:h-14 rounded-full" src="assets/images/Logo.png" alt="TutorialByte Logo">
+    <h1 class="text-black">Tutorial<span class="text-blue-500">Byte</span></h1>
+  </div>
+
+  <button class="md:hidden" (click)="toggleMenu()">
+    <svg class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
+
+  <ul [ngClass]="{'hidden': !isMenuOpen, 'flex': isMenuOpen, 'flex-col gap-4 p-4 mt-2 bg-gray-100 rounded-lg shadow-md absolute top-16 left-0 right-0 z-50': isMenuOpen}"
+      class="md:flex md:gap-6 md:static md:p-0 md:bg-transparent md:shadow-none text-gray-600 font-semibold">
+    <li><a href="#">Courses</a></li>
+    <li><a href="#">About Us</a></li>
+    <li><a href="#">Pricing</a></li>
+    <li><a routerLink="login">Sign In</a></li>
+    <li class=""><a  (click)="signup()" class=" w-full text-center px-4 py-2 text-white bg-blue-600 rounded-full">Get Started</a></li>
+  </ul>
+</nav>
+
+
