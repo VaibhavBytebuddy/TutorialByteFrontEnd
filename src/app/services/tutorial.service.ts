@@ -16,26 +16,33 @@ export interface Tutorial {
 })
 export class TutorialService {
 
-  private baseUrl = 'http://localhost:8080/api/tutorial'; // change to your backend URL
+  private baseUrl = 'http://localhost:8080/api/tutorial';
 
   constructor(private http: HttpClient) {}
 
-  getTutorials(query?: string): Observable<Tutorial[]> {
-    const url = query ? `${this.baseUrl}` : this.baseUrl;
-    return this.http.get<Tutorial[]>(url);
+  // getTutorials(query?: string): Observable<Tutorial[]> {
+  //   const url = query ? `${this.baseUrl}` : this.baseUrl;
+  //   return this.http.get<Tutorial[]>(url);
+  // }
+  getTutorials(query?: string) {
+
+    return this.http.get<Tutorial[]>(this.baseUrl);
   }
 
 
 
-  createTutorial(data: Partial<Tutorial>): Observable<any> {
+
+
+
+  createTutorial(data:any) {
     return this.http.post(this.baseUrl, data);
   }
 
-  updateTutorial(id: string, data: Partial<Tutorial>): Observable<any> {
+  updateTutorial(id: string, data:any): Observable<any> {
     return this.http.put(`${this.baseUrl}/update/${id}`, data );
   }
 
-  deleteTutorial(id: string): Observable<any> {
+  deleteTutorial(id: string){
     return this.http.delete(`${this.baseUrl}/delete/${id}`);
   }
 

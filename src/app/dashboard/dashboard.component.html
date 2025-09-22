@@ -37,10 +37,9 @@
     </header>
 
     <main class="flex-1 p-6 overflow-y-auto">
-      <!-- create modal component (hidden until opened) -->
+
       <app-create-tutorial #createComp (saved)="onSaved()"></app-create-tutorial>
 
-      <!-- tutorials list -->
       <app-my-tutorials #listComp (editTutorial)="onEditRequest($event)"></app-my-tutorials>
     </main>
   </div>
