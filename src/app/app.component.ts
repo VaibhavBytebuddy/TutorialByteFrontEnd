@@ -7,10 +7,11 @@ import {FooterComponent} from './footer/footer.component';
 import {LoginComponent} from './login/login.component';
 import {SignupComponent} from './signup/signup.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
+import {TestComponent} from './test/test.component';
 
 @Component({
   selector: 'app-root',
-  imports: [HeaderComponent, HeroComponent, CategoriesComponent, FooterComponent, LoginComponent, SignupComponent, DashboardComponent, RouterOutlet],
+  imports: [HeaderComponent, HeroComponent, CategoriesComponent, FooterComponent, LoginComponent, SignupComponent, DashboardComponent, RouterOutlet, TestComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

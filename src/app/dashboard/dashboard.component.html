@@ -1,39 +1,59 @@
-<div class="flex h-screen bg-gray-100">
-  <aside class="w-64 bg-blue-900 text-white flex flex-col">
+<div class="lg:flex h-screen bg-gray-100">
+
+
+  <aside
+     [ngClass]="{'hidden': !sidebarOpen,'flex':sidebarOpen }"
+    class="w-64 hidden bg-blue-900 text-white  flex-col fixed inset-y-0 left-0  z-50 lg:flex lg:static">
+
     <div class="p-4 text-2xl font-bold">
-      <img class="h-16 rounded-full" src="assets/images/Logo.png" alt="logo">
+      <img class="h-16 rounded-full" src="assets/images/Logo.png"  alt="logo">
       Tutorial<span class="font-bold text-blue-400">Byte</span>
+      <br/>
+      <button class="   lg:hidden p-2 text-white-900" (click)="toggleSidebar()" > ☰</button>
     </div>
+
     <nav>
-      <a class="flex items-center p-2 rounded bg-blue-800" href="#">📚 My Tutorials</a>
-      <a class="flex items-center p-2 rounded hover:bg-blue-800" href="#">👥 Users</a>
+
+      <a class="flex items-center p-2 rounded bg-blue-800" routerLink="/dashboard">📚 My Tutorials</a>
+      <a class="flex items-center p-2 rounded hover:bg-blue-800" routerLink="/users">👥 Users</a>
     </nav>
   </aside>
 
   <div class="flex-1 flex flex-col">
     <header class="flex items-center justify-between bg-white shadow px-4 py-3">
-      <input type="text" placeholder="Search... is not working "
+<!--      when goes on mobile -->
+      <button class="  lg:hidden p-2 text-gray-700" (click)="toggleSidebar()" > ☰</button>
+
+      <input type="text" placeholder="Search...  "
+              [(ngModel)]="searchTerm"
+             (keyup.enter)="search()"
 
              class="px-4 py-2 border rounded-lg w-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500">
       <button (click)="openCreateModal()"
-              class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">+ Create New Tutorial</button>
+              class="px-2 py-1 text-sm lg:px-4 lg:py-2 lg:text-base bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+        <span class="hidden sm:inline">+ Create New Tutorial</span>
+        <span class="sm:hidden">+ Add</span>
+      </button>
 
 
 
-<!--      profile-->
+
+      <!--      profile-->
       <div class="relative" (click)="toggleDropdown()">
         <img src="assets/images/userAvtar.png" alt="User"
              class="h-10 w-10 rounded-full border cursor-pointer">
         <div *ngIf="dropdownOpen"
              class="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg py-2 z-50">
-          <h3 class="px-4 py-2 text-gray-700 font-medium">{{ username }}</h3>
-          <h5 class="px-4 py-2 text-gray-700 font-medium">{{email}}</h5>
+          <h3 class="   px-4 py-2 text-gray-700 font-medium">{{ username }}</h3>
+          <h5 class="px-4 py-2  text-gray-700 font-medium">{{email}}</h5>
           <button (click)="logout()"
                   class="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100">
             Logout
           </button>
         </div>
+
         </div>
+
     </header>
 
     <main class="flex-1 p-6 overflow-y-auto">

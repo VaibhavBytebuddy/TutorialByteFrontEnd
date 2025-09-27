@@ -3,6 +3,7 @@ import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 
 
+
 export interface Tutorial {
   id?: string;
   title: string;
@@ -24,8 +25,7 @@ export class TutorialService {
   //   const url = query ? `${this.baseUrl}` : this.baseUrl;
   //   return this.http.get<Tutorial[]>(url);
   // }
-  getTutorials(query?: string) {
-
+  getTutorials() {
     return this.http.get<Tutorial[]>(this.baseUrl);
   }
 
@@ -47,4 +47,22 @@ export class TutorialService {
   }
 
 
+  getPublished() {
+    return this.http.get<Tutorial[]>(`${this.baseUrl}/published`);
+
+  }
+
+  getDraft() {
+    return this.http.get<Tutorial[]>(`${this.baseUrl}/draft`);
+  }
+
+  filterByCategory(category: string) {
+    debugger;
+    return this.http.get<Tutorial[]>(`${this.baseUrl}/category/${category}`);
+  }
+
+  searching(query: string) {
+    debugger;
+      return this.http.get<Tutorial[]>(`${this.baseUrl}/search/${query}`);
+  }
 }

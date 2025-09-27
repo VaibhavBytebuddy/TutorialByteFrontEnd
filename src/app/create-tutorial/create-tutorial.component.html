@@ -17,7 +17,16 @@
 
     <div>
       <label class="block text-sm text-gray-600">Category</label>
-      <input [(ngModel)]="newTutorial.category" class="w-full px-3 py-2 border rounded mb-3" />
+      <select class="w-full px-3 py-2 border rounded mb-3"
+              [(ngModel)]="newTutorial.category">
+        <option value="" disabled selected>Category</option>
+        <option value="programming">Programming</option>
+        <option value="design">Design</option>
+        <option value="business">Business</option>
+        <option value="language">Language</option>
+        <option value="Music">Music</option>
+        <option value="sports">Sports</option>
+      </select>
     </div>
 
     <div class="flex items-center gap-2 mb-3">

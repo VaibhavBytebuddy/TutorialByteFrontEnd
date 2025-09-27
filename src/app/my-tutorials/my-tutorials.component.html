@@ -1,15 +1,42 @@
 <div>
   <div class="flex items-center justify-between mb-4">
     <h2 class="text-2xl font-bold">My Tutorials</h2>
+
+  </div>
     <div *ngIf="loading" class="text-sm text-gray-500">Loading...</div>
+
+      <div class="relative p-2 gap-2 flex items-center">
+        <button class="px-3 py-1 text-sm rounded bg-blue-400  hover:bg-blue-800 text-white"  (click)="loadTutorials()">All</button>
+        <button class="px-3 py-1 text-sm rounded bg-red-200 hover:bg-red-600" (click)="getPublished()">Published</button>
+        <button class="px-3 py-1 text-sm rounded bg-green-200 hover:bg-green-700"  (click)="getDraft()" >Drafts</button>
+
+
+        <select class="p-1 bg-purple-300 rounded-lg hover:bg-purple-500"
+                [(ngModel)]="category"
+                (ngModelChange)="filterByCategory($event)">
+          <option value="" disabled selected>Category</option>
+          <option value="programming">Programming</option>
+          <option value="design">Design</option>
+          <option value="business">Business</option>
+          <option value="language">Language</option>
+          <option value="Music">Music</option>
+          <option value="sports">Sports</option>
+        </select>
+
+
+      </div>
+
+
   </div>
 
+<div>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
     <div *ngFor="let t of tutorials" class="bg-white rounded p-4 shadow flex flex-col">
       <div class="flex-1">
-        <div class="h-32 bg-gray-200 rounded mb-4 flex items-center justify-center hover:border-gray-600">
-          <span class="text-gray-500">Thumbnail</span>
-        </div>
+
+        <img class="h-32 w-96 bg-gray-200 rounded mb-4 flex items-center justify-center hover:border-gray-600 " src="assets/images/Logo.png"/>
+
+
         <h3 class="font-semibold text-lg">{{ t.title }}</h3>
         <p class="text-sm text-gray-500 mt-1">{{ t.description }}</p>
         <div class="text-xs text-blue-600 mt-2">{{ t.category }}</div>
@@ -31,3 +58,4 @@
 
   <div *ngIf="!loading && tutorials.length === 0" class="text-gray-500 mt-6">No tutorials found.</div>
 </div>
+

@@ -1,9 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { CreateTutorialComponent } from '../create-tutorial/create-tutorial.component';
 import { MyTutorialsComponent } from '../my-tutorials/my-tutorials.component';
-import { Tutorial } from '../services/tutorial.service';
+import {Tutorial, TutorialService} from '../services/tutorial.service';
 import {AuthService} from '../services/auth.service';
-import {NgIf} from '@angular/common';
+import {NgClass, NgIf} from '@angular/common';
+import {RouterLink} from '@angular/router';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,11 +13,24 @@ import {NgIf} from '@angular/common';
   imports: [
     MyTutorialsComponent,
     CreateTutorialComponent,
-    NgIf
+    NgIf,
+    RouterLink,
+    NgClass,
+    FormsModule
   ],
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
+
+  sidebarOpen=false;
+  searchTerm: string='';
+
+
+  search() {
+console.log("Search String  ",this.searchTerm);
+    this.listComp.search(this.searchTerm);
+    this.searchTerm=" ";
+  }
   @ViewChild('createComp') createComp!: CreateTutorialComponent;
   @ViewChild('listComp') listComp!: MyTutorialsComponent;
 
@@ -26,6 +41,7 @@ export class DashboardComponent {
   dropdownOpen = false;
   username = localStorage.getItem('username');
   email = localStorage.getItem('email');
+
 
 
   constructor(private authService: AuthService) {
@@ -51,4 +67,8 @@ export class DashboardComponent {
   }
 
 
+
+  toggleSidebar() {
+this.sidebarOpen=!this.sidebarOpen;
+  }
 }

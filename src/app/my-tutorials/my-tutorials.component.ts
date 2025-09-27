@@ -1,14 +1,17 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { TutorialService, Tutorial } from '../services/tutorial.service';
 import { Subject, of } from 'rxjs';
-import {NgForOf, NgIf} from '@angular/common';
+import {JsonPipe, NgForOf, NgIf} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-my-tutorials',
   templateUrl: './my-tutorials.component.html',
   imports: [
     NgIf,
-    NgForOf
+    NgForOf,
+    FormsModule,
+
   ],
   styleUrls: ['./my-tutorials.component.css']
 })
@@ -19,8 +22,10 @@ export class MyTutorialsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   @Output() editTutorial = new EventEmitter<Tutorial>();
+  category: string='';
 
-  constructor(private tutorialService: TutorialService) {}
+  constructor(private tutorialService: TutorialService) {
+  }
 
   ngOnInit() {
 
@@ -29,7 +34,9 @@ export class MyTutorialsComponent implements OnInit, OnDestroy {
 
   loadTutorials() {
     this.loading = true;
+
     this.tutorialService.getTutorials().subscribe(data => {
+
       this.tutorials = data;
       this.loading = false;
     });
@@ -37,7 +44,16 @@ export class MyTutorialsComponent implements OnInit, OnDestroy {
 
 
   search(query: string) {
-    this.search$.next(query);
+    debugger;
+    this.tutorialService.searching(query).subscribe(data => {
+      this.tutorials = data;
+      console.log(data);
+      this.loading = false;
+    },error => {
+      if (error.status == 404) {
+        this.tutorials = [{title:'Tutorials not Found',description:'No tutorials match your search',category:'' ,published:false }];
+      }
+    });
   }
 
   onEdit(t: Tutorial) {
@@ -54,9 +70,46 @@ export class MyTutorialsComponent implements OnInit, OnDestroy {
   }
 
 
-
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  getPublished() {
+    this.tutorialService.getPublished().subscribe((resp) => {
+      this.tutorials = resp;
+    },(error)=>{
+      if (error.status == 404) {
+        this.tutorials=[{title:'No Tutorial',description:'No published tutorials Right now',category:'' ,published:true }];
+      }
+    })
+  }
+
+
+  getDraft() {
+    this.tutorialService.getDraft().subscribe((resp) => {
+     this.tutorials=resp;
+    })
+  }
+
+  filterByCategory(selectedCategory: string) {
+    this.category = selectedCategory;
+    console.log("Selected Category:", this.category);
+
+    this.tutorialService.filterByCategory(this.category).subscribe({
+      next: (resp) => {
+        this.tutorials = resp;
+        console.log("Filtered Tutorials:", this.tutorials);
+      },
+      error: (err) => {
+       if (err.status === 404) {
+         this.tutorials=[{title:'Tutorials not Found',description:'This category has no tutorials Right now',category:this.category ,published:false }];
+       }
+      }
+    });
+  }
+
+
+
+
 }

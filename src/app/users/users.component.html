@@ -1,0 +1,30 @@
+
+<div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <div *ngFor="let u of users" class="bg-white rounded p-4 shadow flex flex-col">
+      <div class="flex-1">
+
+        <img class="h-32 w-96 bg-gray-200 rounded mb-4 flex items-center justify-center hover:border-gray-600 " src="assets/images/Logo.png"/>
+
+
+        <h3 class="font-semibold text-lg">{{ u.username }}</h3>
+        <p class="text-sm text-gray-500 mt-1">{{ u.email }}</p>
+        <div class="text-xs text-blue-600 mt-2">{{ u.role }}</div>
+      </div>
+
+      <div class="flex items-center justify-between mt-4">
+        <div class="flex items-center gap-2">
+          <button (click)="onEdit(u)" class="px-3 py-1 border rounded text-sm hover:bg-blue-700">Edit</button>
+          <button (click)="onDelete(u)" class="px-3 py-1 border rounded text-sm text-red-600 hover:bg-red-400">Delete</button>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs px-2 py-1 rounded bg-green-100 text-green-700" *ngIf="u.published">Published</span>
+          <span class="text-xs px-2 py-1 rounded bg-yellow-100 text-yellow-700" *ngIf="!u.published">Draft</span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && use.length === 0" class="text-gray-500 mt-6">No User found.</div>
+</div>
